@@ -1,0 +1,71 @@
+
+===============================
+ROTEIRO DE APRESENTAÇÃO - PROJETO ARQUITETURA DE SISTEMAS
+===============================
+
+Data: 03/06/2025
+
+---
+
+1. INTRODUÇÃO
+
+O projeto desenvolvido tem como objetivo demonstrar uma aplicação distribuída, dividida em três camadas principais: 
+front-end, back-end principal e um serviço externo, conforme os requisitos da disciplina de Projeto e Arquitetura de Sistemas. 
+Toda a comunicação entre camadas foi feita por HTTP, simulando uma arquitetura de microserviços.
+
+---
+
+2. COMPONENTES DESENVOLVIDOS
+
+• Serviço Externo (serviço-status)
+  - Desenvolvido com Spring Boot.
+  - Expõe o endpoint GET /api/status/{nome}.
+  - Retorna um JSON com o nome do cliente e o status ("ATIVO").
+  - Porta: 8081.
+
+• Back-end Principal (backendPAS)
+  - Desenvolvido com Spring Boot + Spring Web + JPA.
+  - Consome o serviço externo utilizando WebClient.
+  - Expõe o endpoint GET /api/externo/status/{nome}.
+  - Integra também com banco de dados MySQL local.
+  - Porta: 8080.
+
+• Banco de Dados
+  - MySQL instalado e utilizado localmente via MySQL Workbench.
+  - Banco: projeto_americo
+  - Tabelas criadas automaticamente via Hibernate (ddl-auto=update).
+  - Usuário: cseuser | Senha: senha123
+
+• Front-end (frontend-status)
+  - Desenvolvido com HTML, CSS e JavaScript puro.
+  - Executado via http-server (npm) no VS Code.
+  - Permite digitar o nome de um cliente e exibir o status vindo do back-end.
+
+---
+
+3. FLUXO DE FUNCIONAMENTO
+
+[1] O usuário acessa a tela HTML e digita o nome do cliente.
+[2] O JavaScript dispara uma requisição para o backendPAS: 
+    → GET http://localhost:8080/api/externo/status/Levi
+[3] O backendPAS faz uma chamada interna (via WebClient) ao serviço externo:
+    → GET http://localhost:8081/api/status/Levi
+[4] O serviço externo retorna o status do cliente.
+[5] O back-end entrega a resposta final ao front-end.
+[6] O front-end exibe os dados do cliente na tela.
+
+---
+
+4. EXECUÇÃO LOCAL
+
+- Os serviços foram testados localmente, utilizando Maven para empacotamento e execução via terminal.
+- O banco de dados foi instalado e configurado com MySQL Workbench.
+- O front-end foi iniciado com o comando: `http-server .` no diretório da página HTML.
+
+---
+
+5. CONCLUSÃO
+
+O projeto demonstra com sucesso uma arquitetura distribuída básica, com separação de responsabilidade entre camadas, consumo de serviços externos e persistência de dados. Cada parte do sistema foi desenvolvida, testada e integrada de forma funcional, demonstrando o entendimento dos conceitos abordados em sala de aula.
+
+===============================
